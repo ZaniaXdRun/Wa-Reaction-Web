@@ -15,25 +15,27 @@
 
 ## Tentang
 
-Wa-Reaction-Web adalah web app buat ngirim reaksi ke pesan dan channel WhatsApp lewat browser. Buka webnya, pilih pesannya, pilih emojinya, kirim. Beres.
-
-> Status: masih dalam pengembangan. Fitur dan panduan instalasi bakal dilengkapi seiring rilis pertama.
+Zaa React adalah web app buat ngirim reaksi ke postingan channel WhatsApp. Tempel link post channel-nya, pilih emoji (maksimal 15), kirim. Riwayat dan statistik tersimpan di browser kamu.
 
 ## Fitur
 
-- Kirim reaksi ke post channel WhatsApp dari web
-- Pilih emoji reaksi sesukamu
-- Lihat riwayat reaksi yang udah dikirim
-- Nggak perlu install aplikasi tambahan, cukup browser
+- Tempel link post channel WhatsApp, langsung kirim reaksi
+- Pilih sampai 15 emoji, ada pilihan cepat dan input manual
+- Riwayat 30 aktivitas terakhir plus statistik berhasil/gagal, tersimpan di localStorage
+- Mode gelap dan terang
+- Pemutar musik bawaan (ZAA MUSIC)
+
+> Satu tekan = satu permintaan ke provider, batas penggunaan tetap berlaku.
 
 ## Cara Pakai
 
+Web ini statis, nggak perlu build atau server backend. Buka `index.html` langsung di browser, atau serve foldernya:
+
 ```bash
-git clone https://github.com/ZaniaXdRun/Wa-Reaction-Web.git
-cd Wa-Reaction-Web
+npx serve .
 ```
 
-Panduan jalanin aplikasinya menyusul setelah versi pertama rilis.
+Terus buka alamat yang muncul di browser.
 
 ## Cacingnya
 
