@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a1015">
+<title>Zaa React — WhatsApp Channel Reaction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#06170d" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l8.8 8.8 8.8-8.8a5.5 5.5 0 0 0 0-7.8Z"/>
+        </svg>
+      </div>
+      <div><h1>ZAA<span>REACT</span></h1><p>WHATSAPP CHANNEL REACTION TOOL</p></div>
+    </div>
+    <button class="icon-btn" id="themeBtn" title="Ganti tema" aria-label="Ganti tema">
+      <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+    </button>
+  </header>
+
+  <section class="hero">
+    <span class="tag"><i class="dot"></i> Provider aktif</span>
+    <h2>Kasih reaksi ke <em>channel</em><br>WhatsApp dalam satu klik.</h2>
+    <p>Tempel link postingan channel, pilih emoji, kirim. Riwayat dan statistik tersimpan di browser kamu.</p>
+  </section>
+
+  <div class="grid">
+    <!-- form -->
+    <div class="card">
+      <div class="card-head"><div class="n">1</div><h3>Buat Reaksi</h3><span class="sub">MAKS. 15 EMOJI</span></div>
+
+      <label class="field">LINK POST CHANNEL</label>
+      <div class="input-row">
+        <div class="input-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>
+          <input type="text" id="link" placeholder="https://whatsapp.com/channel/..." autocomplete="off" spellcheck="false">
+        </div>
+        <button class="paste" id="pasteBtn">Tempel</button>
+      </div>
+      <div class="hint">Link harus mengandung <b>/channel/</b> dan berasal dari whatsapp.com</div>
+
+      <div class="divider"></div>
+
+      <div class="emoji-top">
+        <label class="field" style="margin:0">PILIH EMOJI</label>
+        <span class="count" id="count">0 / 15</span>
+      </div>
+      <div class="quick" id="quick"></div>
+      <input type="text" class="manual" id="manual" placeholder="Atau ketik / tempel emoji di sini..." autocomplete="off">
+
+      <div class="selected-wrap"><div class="selected" id="selected"><span class="empty-text">Belum ada emoji dipilih</span></div></div>
+      <div class="clear-row"><button class="link-btn" id="clearBtn">Kosongkan semua</button></div>
+
+      <button class="submit" id="sendBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4 20-7Z"/><path d="M22 2 11 13"/></svg>
+        <span>Kirim Reaksi</span>
+      </button>
+
+      <div class="notice" id="notice"><strong id="noticeTitle"></strong><span id="noticeMsg"></span></div>
+    </div>
+
+    <!-- side -->
+    <div class="card">
+      <div class="card-head"><div class="n">2</div><h3>Aktivitas</h3><span class="sub">TERAKHIR 30</span></div>
+      <div class="stats">
+        <div class="stat"><b id="sTotal">0</b><small>Total</small></div>
+        <div class="stat"><b id="sOk">0</b><small>Berhasil</small></div>
+        <div class="stat"><b id="sFail">0</b><small>Gagal</small></div>
+      </div>
+      <div class="hist-head"><h3 style="font-size:13px;font-weight:700;color:var(--muted)">Riwayat</h3><button id="clearHist">Hapus semua</button></div>
+      <div class="hist-list" id="hist"><div class="hist-empty">Belum ada riwayat aktivitas.</div></div>
+    </div>
+  </div>
+
+  <footer><b>ZAA REACT</b> · satu tekan = satu permintaan ke provider · batas penggunaan tetap berlaku</footer>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="overlay" id="overlay">
+  <div class="load-box">
+    <canvas id="wormCanvas"></canvas>
+    <h4 id="loadTitle">Mengirim reaksi<span class="dots"><i></i><i></i><i></i></span></h4>
+  </div>
+</div>
+
+<!-- audio player melayang -->
+<button class="fab" id="audioFab" title="Pemutar audio" aria-label="Pemutar audio">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+</button>
+<div class="audio-pop" id="audioPop">
+  <div class="audio-head"><span>ZAA MUSIC</span><button id="audioClose" title="Tutup">×</button></div>
+  <div class="audio-track" id="audioTrack">audio1.mp3</div>
+  <div class="audio-bar"><i id="audioFill"></i></div>
+  <div class="audio-ctrl">
+    <button id="audioPrev" title="Sebelumnya">‹</button>
+    <button id="audioToggle" class="play" title="Putar/Jeda">▶</button>
+    <button id="audioNext" title="Berikutnya">›</button>
+  </div>
+  <div class="audio-note" id="audioNote">Taruh audio1.mp3 – audio6.mp3 di folder yang sama</div>
+</div>
+<audio id="audioEl" preload="none"></audio>
+
+<script src="./app.js" defer></script>
+</body>
+</html>
